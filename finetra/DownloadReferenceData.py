@@ -1,4 +1,5 @@
 from finetra.MFReference import Fund
+from finetra.InfluxClient import connectTest
 import pandas as pd
 import requests
 
@@ -31,9 +32,10 @@ def processFile():
                 # if i >= 20:
                 #     print('breaking on >= 20')
                 #     break
+                print('hello= ',df)
+                connectTest(df)
 
 
-    print(df)
 
 
 
