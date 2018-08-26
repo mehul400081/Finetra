@@ -1,7 +1,10 @@
 from finetra.MFReference import Fund
 from finetra.InfluxClient import connectTest
+from datetime import datetime
 import pandas as pd
 import requests
+import datetime
+
 
 url = "https://www.amfiindia.com/spages/NAVAll.txt"
 filePath = "/home/mehul/PycharmProjects/Finetra/nse.txt"
@@ -26,17 +29,26 @@ def processFile():
                 continue
             #     select only semicolon seperated line
             if line.__contains__(";"):
-                print('processing line', line , 'counter is ', i)
+                print('processing line', line, 'counter is ', i)
                 line = line.rstrip('\n')
-                df = df.append([line.split(";")])
-                # if i >= 20:
-                #     print('breaking on >= 20')
-                #     break
-                print('hello= ',df)
-                connectTest(df)
+                arr =  line.split(";")
+                # convert to timestamp
+                dateindx = arr.__len__()-1
+                arr[dateindx] = datetime.datetime.strptime(arr[dateindx], '%d-%b-%Y')
+                print(arr[arr.__len__()-1] )
+                print(arr)
+                df = df.append([arr])
+                if i >= 20:
+                    print('breaking on >= 20')
+                    break
 
+                # print(df)
 
+    df.columns = ['AMFI', 'ISIN', 'ISIN_SEC', 'NAME', 'NAV', 'DATE']
+    print('0000000000000000000000000000000000000000000000000000000000000\n')
+    print(df)
 
+    connectTest(df)
 
 
 def main():
