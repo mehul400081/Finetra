@@ -13,11 +13,11 @@ tbName = "referenceData"
 def connectTest(df):
 
     timeValues = df[['NAV']]
-    timeValues.index = df[['DATE']]
-    tags = {'AMFI': df[['AMFI']], 'ISIN': df[['ISIN']]}
-
+    # TODO: Add Tag
+    # tags = { "AMFI": df[["AMFI"]]}
+    # print('tags are: \n',tags)
     dbConnDF = DataFrameClient(host, port, user, password, dbName)
-    dbConnDF.write_points(df, dbName, tbName, timeValues, tags)
+    dbConnDF.write_points(dataframe=df, measurement=tbName, field_columns = timeValues, database = dbName)
 
 
 

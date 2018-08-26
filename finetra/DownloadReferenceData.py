@@ -35,18 +35,24 @@ def processFile():
                 # convert to timestamp
                 dateindx = arr.__len__()-1
                 arr[dateindx] = datetime.datetime.strptime(arr[dateindx], '%d-%b-%Y')
+                arr[0] = int(arr[0])
                 print(arr[arr.__len__()-1] )
                 print(arr)
+
+
                 df = df.append([arr])
-                if i >= 20:
-                    print('breaking on >= 20')
-                    break
+
+                # if i >= 8:
+                #     print('breaking on >= 20')
+                #     break
 
                 # print(df)
 
     df.columns = ['AMFI', 'ISIN', 'ISIN_SEC', 'NAME', 'NAV', 'DATE']
+
     print('0000000000000000000000000000000000000000000000000000000000000\n')
-    print(df)
+    df.set_index('DATE', inplace=True)
+    print(df.dtypes)
 
     connectTest(df)
 
